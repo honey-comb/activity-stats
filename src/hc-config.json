@@ -1,0 +1,14 @@
+{
+    "general": {
+        "packageName": "honey-comb/activity-stats",
+        "sequence": 0,
+        "namespace": "HoneyComb\\ActivityStats\\"
+    },
+    "formData": {},
+    "adminMenu": [],
+    "seeder": "",
+    "routes": [],
+    "acl": {
+        "permissions": []
+    }
+}
