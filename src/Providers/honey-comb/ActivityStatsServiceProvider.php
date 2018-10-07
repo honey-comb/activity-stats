@@ -35,7 +35,7 @@ use HoneyComb\Starter\Providers\HCBaseServiceProvider;
  * Class honey-comb/activity-statsServiceProvider
  * @package HoneyComb\ActivityStats\Providers
  */
-class honey-comb/activity-statsServiceProvider extends HCBaseServiceProvider
+class ActivityStatsServiceProvider extends HCBaseServiceProvider
 {
     /**
      * @var string
