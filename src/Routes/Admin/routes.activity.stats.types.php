@@ -1,0 +1,85 @@
+<?php
+/**
+ * @copyright 2018 interactivesolutions
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * Contact InteractiveSolutions:
+ * E-mail: hello@interactivesolutions.lt
+ * http://www.interactivesolutions.lt
+ */
+
+declare(strict_types = 1);
+
+Route::domain(config('hc.admin_domain'))
+    ->prefix(config('hc.admin_url'))
+    ->namespace('Admin')
+    ->middleware(['web', 'auth'])
+    ->group(function() {
+
+        Route::get('activity-stats/types', 'HCActivityStatsTypeController@index')
+            ->name('admin.activity.stats.types.index')
+            ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_list');
+
+        Route::prefix('api/activity-stats/types')->group(function() {
+
+            Route::get('/', 'HCActivityStatsTypeController@getListPaginate')
+                ->name('admin.api.activity.stats.types')
+                ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_list');
+
+            Route::get('list', 'HCActivityStatsTypeController@getList')
+                ->name('admin.api.activity.stats.types.list')
+                ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_list');
+
+            Route::get('options', 'HCActivityStatsTypeController@getOptions')
+                ->name('admin.api.activity.stats.types.list');
+
+            Route::post('/', 'HCActivityStatsTypeController@store')
+                ->name('admin.api.activity.stats.types.create')
+                ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_create');
+
+            Route::delete('/', 'HCActivityStatsTypeController@deleteSoft')
+                ->name('admin.api.activity.stats.types.delete')
+                ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_delete');
+
+            Route::delete('force', 'HCActivityStatsTypeController@deleteForce')
+                ->name('admin.api.activity.stats.types.delete.force')
+                ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_delete_force');
+
+            Route::post('restore', 'HCActivityStatsTypeController@restore')
+                ->name('admin.api.activity.stats.types.restore')
+                ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_restore');
+
+            Route::prefix('{id}')->group(function() {
+
+                Route::get('/', 'HCActivityStatsTypeController@getById')
+                    ->name('admin.api.activity.stats.types.single')
+                    ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_list');
+
+                Route::put('/', 'HCActivityStatsTypeController@update')
+                    ->name('admin.api.activity.stats.types.update')
+                    ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_update');
+
+                Route::patch('/', 'HCActivityStatsTypeController@patch')
+                    ->name('admin.api.activity.stats.types.patch')
+                    ->middleware('acl:honey_comb_activity_stats_activity_stats_types_admin_update');
+            });
+        });
+
+    });

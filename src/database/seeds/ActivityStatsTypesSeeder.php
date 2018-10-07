@@ -27,12 +27,34 @@
 
 declare(strict_types = 1);
 
-namespace HoneyComb\ActivityStats\database\seeds;
+namespace HoneyComb\ActivityStats\Database\Seeds;
 
+use HoneyComb\ActivityStats\Services\Admin\HCActivityStatsTypeService;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Seeder;
 
-class honey-comb/activity-statsSeeder extends Seeder
+class ActivityStatsTypesSeeder extends Seeder
 {
+    /**
+     * @var \Illuminate\Database\Connection
+     */
+    private $connection;
+    /**
+     * @var \HoneyComb\ActivityStats\Services\Admin\HCActivityStatsTypeService
+     */
+    private $statsTypeService;
+
+    /**
+     * ActivityStatsSeeder constructor.
+     * @param \Illuminate\Database\Connection $connection
+     * @param \HoneyComb\ActivityStats\Services\Admin\HCActivityStatsTypeService $statsTypeService
+     */
+    public function __construct(Connection $connection, HCActivityStatsTypeService $statsTypeService)
+    {
+        $this->connection = $connection;
+        $this->statsTypeService = $statsTypeService;
+    }
+
     /**
      * Run the database seeds.
      *
@@ -40,6 +62,8 @@ class honey-comb/activity-statsSeeder extends Seeder
      */
     public function run(): void
     {
-
+        $this->statsTypeService->getRepository()->updateOrCreate(
+            ['id' => HCActivityStatsTypeService::TYPE_VISITS],
+            ['id' => HCActivityStatsTypeService::TYPE_VISITS]);
     }
 }
