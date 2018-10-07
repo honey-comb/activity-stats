@@ -1,6 +1,6 @@
 {
     "general": {
-        "packageName": "honey-comb/activity-stats",
+        "packageName": "ActivityStats",
         "sequence": 0,
         "namespace": "HoneyComb\\ActivityStats\\"
     },
