@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -28,7 +29,7 @@ class CreateHcActivityStatsDetailedDataTable extends Migration
             $table->dateTime('date');
             $table->integer('amount');
 
-            $table->foreign('type_id')->references('id')->on('hc_activity_stats_type')->onDelete('CASCADE');
+            $table->foreign('type_id')->references('id')->on('hc_activity_stats_type');
         });
     }
 

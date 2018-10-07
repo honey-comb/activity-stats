@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHcActivityStatsDaysDataTable extends Migration
+class CreateHcActivityStatsYearsDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateHcActivityStatsDaysDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('hc_activity_stats_days_data', function(Blueprint $table) {
+        Schema::create('hc_activity_stats_years_data', function(Blueprint $table) {
             $table->increments('count');
             $table->uuid('id')->unique();
             $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -26,7 +26,7 @@ class CreateHcActivityStatsDaysDataTable extends Migration
             $table->string('amountable_id');
             $table->uuid('amountable_type');
 
-            $table->date('date');
+            $table->year('date');
             $table->integer('amount');
 
             $table->foreign('type_id')->references('id')->on('hc_activity_stats_type');
@@ -40,10 +40,10 @@ class CreateHcActivityStatsDaysDataTable extends Migration
      */
     public function down()
     {
-        Schema::table('hc_activity_stats_days_data', function(Blueprint $table) {
+        Schema::table('hc_activity_stats_years_data', function(Blueprint $table) {
             $table->dropForeign(['type_id']);
         });
 
-        Schema::dropIfExists('hc_activity_stats_days_data');
+        Schema::dropIfExists('hc_activity_stats_years_data');
     }
 }
