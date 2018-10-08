@@ -30,6 +30,7 @@ class CreateHcActivityStatsYearsDataTable extends Migration
             $table->integer('amount');
 
             $table->foreign('type_id')->references('id')->on('hc_activity_stats_type');
+            $table->unique(['type_id', 'date', 'amountable_id', 'amountable_type'], 'years_activity_stats_unique');
         });
     }
 

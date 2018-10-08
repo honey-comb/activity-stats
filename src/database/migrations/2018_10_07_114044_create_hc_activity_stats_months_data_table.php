@@ -26,10 +26,11 @@ class CreateHcActivityStatsMonthsDataTable extends Migration
             $table->string('amountable_id');
             $table->uuid('amountable_type');
 
-            $table->date('date');
+            $table->string('date', 7);
             $table->integer('amount');
 
             $table->foreign('type_id')->references('id')->on('hc_activity_stats_type');
+            $table->unique(['type_id', 'date', 'amountable_id', 'amountable_type'], 'months_activity_stats_unique');
         });
     }
 
