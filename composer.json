@@ -41,5 +41,12 @@
         "platform": {
             "php": "7.1"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HoneyComb\\ActivityStats\\Providers\\ActivityStatsServiceProvider"
+            ]
+        }
     }
 }
