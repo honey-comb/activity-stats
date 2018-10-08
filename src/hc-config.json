@@ -1,39 +1,18 @@
 {
-    "general": {
-        "packageName": "ActivityStats",
-        "sequence": 0,
-        "namespace": "HoneyComb\\ActivityStats\\"
-    },
-    "formData": {
-        "activity.stats.types": "HoneyComb\\ActivityStats\\Forms\\Admin\\HCActivityStatsTypeForm"
-    },
-    "adminMenu": [
-        {
-            "route": "admin.activity.stats.types.index",
-            "parent": "admin.index",
-            "translation": "ActivityStats::activity_stats_types.page_title",
-            "icon": "filter",
-            "aclPermission": "honey_comb_activity_stats_activity_stats_types_list"
-        }
-    ],
-    "seeder": "HoneyComb\\ActivityStats\\Database\\Seeds\\ActivityStatsSeeder",
-    "routes": [
-        "Routes\/Admin\/routes.activity.stats.types.php"
-    ],
-    "acl": {
-        "permissions": [
-            {
-                "name": "acl.activity.stats.types",
-                "controller": "HoneyComb\\ActivityStats\\Http\\Controllers\\Admin\\HCActivityStatsTypeController",
-                "actions": [
-                    "honey_comb_activity_stats_activity_stats_types_update",
-                    "honey_comb_activity_stats_activity_stats_types_create",
-                    "honey_comb_activity_stats_activity_stats_types_delete",
-                    "honey_comb_activity_stats_activity_stats_types_delete_force",
-                    "honey_comb_activity_stats_activity_stats_types_restore",
-                    "honey_comb_activity_stats_activity_stats_types_list"
-                ]
-            }
-        ]
-    }
+  "general": {
+    "packageName": "ActivityStats",
+    "sequence": 0,
+    "namespace": "HoneyComb\\ActivityStats\\"
+  },
+  "formData": {
+  },
+  "adminMenu": [
+  ],
+  "seeder": "HoneyComb\\ActivityStats\\Database\\Seeds\\ActivityStatsSeeder",
+  "routes": [
+  ],
+  "acl": {
+    "permissions": [
+    ]
+  }
 }
