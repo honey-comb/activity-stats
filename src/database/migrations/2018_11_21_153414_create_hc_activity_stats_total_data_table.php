@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class CreateHcActivityStatsTotalDataTable
+ */
 class CreateHcActivityStatsTotalDataTable extends Migration
 {
     /**
@@ -12,9 +15,9 @@ class CreateHcActivityStatsTotalDataTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('hc_activity_stats_total_data', function(Blueprint $table) {
+        Schema::create('hc_activity_stats_total_data', function (Blueprint $table) {
             $table->increments('count');
             $table->uuid('id')->unique();
             $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -39,12 +42,12 @@ class CreateHcActivityStatsTotalDataTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('hc_activity_stats_years_data', function(Blueprint $table) {
+        Schema::table('hc_activity_stats_total_data', function (Blueprint $table) {
             $table->dropForeign(['type_id']);
         });
 
-        Schema::dropIfExists('hc_activity_stats_years_data');
+        Schema::dropIfExists('hc_activity_stats_total_data');
     }
 }
