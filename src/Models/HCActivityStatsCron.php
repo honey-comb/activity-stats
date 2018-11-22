@@ -63,4 +63,8 @@ class HCActivityStatsCron extends HCModel
 
     ];
 
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
 }
