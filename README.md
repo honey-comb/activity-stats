@@ -1,4 +1,4 @@
-# honeycomb-payments  
+# honeycomb - activity stats package 
 Regions package for HoneyComb CMS
 https://github.com/honey-comb/activity-stats
 
