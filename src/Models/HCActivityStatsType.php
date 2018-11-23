@@ -54,6 +54,7 @@ class HCActivityStatsType extends HCUuidModel
      */
     protected $fillable = [
         'id',
+        'countable',
     ];
 
     /**
