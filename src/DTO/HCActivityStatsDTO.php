@@ -43,6 +43,11 @@ class HCActivityStatsDTO
      * @var int
      */
     private $dateType;
+    /**
+     * @var string
+     */
+    private $amountableId;
+
 
     /**
      * HCActivityStatsDTO constructor.
@@ -50,12 +55,14 @@ class HCActivityStatsDTO
      * @param \Carbon\Carbon $date
      * @param int $amount
      * @param string $type
+     * @param string $amountableId
      */
-    public function __construct(int $dateType, Carbon $date, int $amount, string $type)
+    public function __construct(int $dateType, Carbon $date, int $amount, string $type, string $amountableId)
     {
         $this->amount = $amount;
         $this->type = $type;
         $this->dateType = $dateType;
+        $this->amountableId = $amountableId;
 
         switch ($dateType) {
             case self::DETAILS:
@@ -87,6 +94,7 @@ class HCActivityStatsDTO
         return [
             'type_id' => $this->type,
             'date' => $this->date,
+            'amountable_id' => $this->amountableId,
         ];
     }
 
@@ -97,16 +105,14 @@ class HCActivityStatsDTO
     public function getParams(int $amount = 0): array
     {
         $data = [
-            'type_id' => $this->type,
             'amount' => $this->amount + $amount,
-            'date' => $this->date,
         ];
 
         return $data;
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getDateType(): int
     {
