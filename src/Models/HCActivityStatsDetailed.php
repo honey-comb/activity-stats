@@ -31,6 +31,7 @@ namespace HoneyComb\ActivityStats\Models;
 
 use HoneyComb\ActivityStats\Models\Traits\HCActivityStatsTrait;
 use HoneyComb\Starter\Models\HCUuidModel;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 /**
@@ -69,4 +70,11 @@ class HCActivityStatsDetailed extends HCUuidModel
 
     ];
 
+    /**
+     * @return HasOne
+     */
+    public function type(): HasOne
+    {
+        return $this->hasOne(HCActivityStatsType::class, 'id', 'type_id');
+    }
 }
