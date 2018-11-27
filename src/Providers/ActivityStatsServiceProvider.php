@@ -29,6 +29,7 @@ declare(strict_types = 1);
 
 namespace HoneyComb\ActivityStats\Providers;
 
+use HoneyComb\ActivityStats\Console\HCGenerateActivityStatsCommand;
 use HoneyComb\Starter\Providers\HCBaseServiceProvider;
 
 /**
@@ -47,7 +48,9 @@ class ActivityStatsServiceProvider extends HCBaseServiceProvider
      *
      * @var array
      */
-    protected $commands = [];
+    protected $commands = [
+        HCGenerateActivityStatsCommand::class,
+    ];
 
     /**
      * Controller namespace
