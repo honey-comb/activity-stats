@@ -26,34 +26,36 @@ class HCActivityStatsRepository extends HCBaseRepository
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param \HoneyComb\ActivityStats\DTO\HCActivityStatsDTO $data
      */
-    public function changeAmount(Model $model, HCActivityStatsDTO $data)
+    public function changeAmount(Model $model, HCActivityStatsDTO $data): void
     {
-        $query = $this->getAmount($data->getDateType(), $model);
-        $query->updateOrCreate($data->getUnique(), $data->getParams());
+        $query = $this->getAmount($data->getDateType(), $model, $data->getAmountableId());
+        $query->updateOrCreate($data->getUnique(get_class($model)), $data->getParams());
     }
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param \HoneyComb\ActivityStats\DTO\HCActivityStatsDTO $data
      */
-    public function updateAmount(Model $model, HCActivityStatsDTO $data)
+    public function updateAmount(Model $model, HCActivityStatsDTO $data): void
     {
-        $query = $this->getAmount($data->getDateType(), $model);
+        $query = $this->getAmount($data->getDateType(), $model, $data->getAmountableId());
 
-        $existing = $query->where($data->getUnique())->first();
+        $existing = $query->where($data->getUnique(get_class($model)))->first();
         $existingAmount = $existing ? $existing->amount : 0;
 
-        $query->updateOrCreate($data->getUnique(), $data->getParams($existingAmount));
+        $query->updateOrCreate($data->getUnique(get_class($model)), $data->getParams($existingAmount));
     }
 
     /**
      * @param int $dateType
      * @param \Illuminate\Database\Eloquent\Model $model
+     * @param string $amountableId
      * @return mixed
      */
-    private function getAmount(int $dateType, Model $model)
+    public function getAmount(int $dateType, Model $model, string $amountableId)
     {
         $query = null;
+        $model = $model->all()->where('id', $amountableId)->first();
 
         switch ($dateType) {
             case HCActivityStatsDTO::DETAILS :
