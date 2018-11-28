@@ -87,14 +87,16 @@ class HCActivityStatsDTO
     }
 
     /**
+     * @param string $auditableType
      * @return array
      */
-    public function getUnique(): array
+    public function getUnique(string $auditableType): array
     {
         return [
             'type_id' => $this->type,
             'date' => $this->date,
             'amountable_id' => $this->amountableId,
+            'amountable_type' => $auditableType,
         ];
     }
 
@@ -117,5 +119,13 @@ class HCActivityStatsDTO
     public function getDateType(): int
     {
         return $this->dateType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAmountableId(): string
+    {
+        return $this->amountableId;
     }
 }
