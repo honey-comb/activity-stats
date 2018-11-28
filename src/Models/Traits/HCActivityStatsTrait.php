@@ -5,33 +5,9 @@ namespace HoneyComb\ActivityStats\Models\Traits;
 trait HCActivityStatsTrait
 {
     /**
-     * @return mixed
+     * Get all of the owning amountable models.
      */
-    public function amountableDetailed()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function amountableDays()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function amountableMonths()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function amountableYears()
+    public function amountable()
     {
         return $this->morphTo();
     }

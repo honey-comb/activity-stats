@@ -31,15 +31,12 @@ namespace HoneyComb\ActivityStats\Models;
 
 use HoneyComb\Starter\Models\HCUuidModel;
 
-
 /**
  * Class HCActivityStatsType
  * @package HoneyComb\ActivityStats\Models
  */
 class HCActivityStatsType extends HCUuidModel
 {
-
-
     /**
      * The database table used by the model.
      *
@@ -63,5 +60,4 @@ class HCActivityStatsType extends HCUuidModel
     protected $with = [
 
     ];
-
 }

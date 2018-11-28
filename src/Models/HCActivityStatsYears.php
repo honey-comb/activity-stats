@@ -68,5 +68,4 @@ class HCActivityStatsYears extends HCUuidModel
     protected $with = [
 
     ];
-
 }

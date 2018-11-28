@@ -32,7 +32,6 @@ namespace HoneyComb\ActivityStats\Models;
 use HoneyComb\ActivityStats\Models\Traits\HCActivityStatsTrait;
 use HoneyComb\Starter\Models\HCUuidModel;
 
-
 /**
  * Class HCActivityStatsMonths
  * @package HoneyComb\ActivityStats\Models
@@ -68,5 +67,4 @@ class HCActivityStatsMonths extends HCUuidModel
     protected $with = [
 
     ];
-
 }

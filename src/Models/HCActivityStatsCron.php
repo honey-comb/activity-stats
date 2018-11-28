@@ -29,7 +29,6 @@ declare(strict_types = 1);
 
 namespace HoneyComb\ActivityStats\Models;
 
-use HoneyComb\ActivityStats\Models\Traits\HCActivityStatsTrait;
 use HoneyComb\Starter\Models\HCModel;
 
 /**
@@ -38,8 +37,6 @@ use HoneyComb\Starter\Models\HCModel;
  */
 class HCActivityStatsCron extends HCModel
 {
-    use HCActivityStatsTrait;
-
     /**
      * The database table used by the model.
      *

@@ -32,7 +32,6 @@ namespace HoneyComb\ActivityStats\Models;
 use HoneyComb\ActivityStats\Models\Traits\HCActivityStatsTrait;
 use HoneyComb\Starter\Models\HCUuidModel;
 
-
 /**
  * Class HCActivityStatsDays
  * @package HoneyComb\ActivityStats\Models
@@ -68,13 +67,4 @@ class HCActivityStatsDays extends HCUuidModel
     protected $with = [
 
     ];
-
-    /**
-     * Get all of the owning commentable models.
-     */
-    public function amountable()
-    {
-        return $this->morphTo();
-    }
-
 }

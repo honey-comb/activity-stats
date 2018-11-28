@@ -32,7 +32,6 @@ namespace HoneyComb\ActivityStats\Models;
 use HoneyComb\ActivityStats\Models\Traits\HCActivityStatsTrait;
 use HoneyComb\Starter\Models\HCUuidModel;
 
-
 /**
  * Class HCActivityStatsYears
  * @package HoneyComb\ActivityStats\Models
@@ -68,5 +67,4 @@ class HCActivityStatsTotal extends HCUuidModel
     protected $with = [
 
     ];
-
 }
