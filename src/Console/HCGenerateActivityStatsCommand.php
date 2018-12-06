@@ -33,6 +33,7 @@ use HoneyComb\ActivityStats\Repositories\Admin\HCActivityStatsDetailedDataReposi
 use HoneyComb\ActivityStats\Repositories\Admin\HCActivityStatsRepository;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -88,31 +89,13 @@ class HCGenerateActivityStatsCommand extends Command
 
     public function handle(): void
     {
-        $start = Carbon::now();
-
         $this->info('Start ' . Carbon::now());
+        $untilDate = Carbon::now();
 
-        $lastImportedDate = $this->cronRepository->makeQuery()->select('date')->first();
-        if (isset($lastImportedDate)) {
-            $lastImportedDate = new Carbon($lastImportedDate->date);
-        } else {
-            $lastImportedDate = Carbon::minValue();
-        }
-        //TODO move to repo
-        $items = $this->detailedRepository->makeQuery()
-            ->select('type_id', 'amountable_id', 'amountable_type', 'date', 'amount')
-            ->whereHas('type', function ($query) {
-                $query->where('countable', true);
-            })
-            ->setEagerLoads([])
-            ->with([
-                'type' => function ($query) {
-                    $query->setEagerLoads([])
-                        ->select('id');
-                },
-            ])
-            ->whereDate('date', '<=', $start)
-            ->whereDate('date', '>', $lastImportedDate)->get();
+        $lastImportedDate = $this->cronRepository->makeQuery()->first();
+        $fromDate = $this->getLastImportedDay($lastImportedDate);
+
+        $items = $this->detailedRepository->getEntries($fromDate, $untilDate);
 
         $this->detailedToDays($items);
         $this->detailedToMonths($items);
@@ -121,7 +104,7 @@ class HCGenerateActivityStatsCommand extends Command
         //TODO add detailedTotal
         //$this->detailedTotal($items);
 
-        $this->updateCronTimestamp($start);
+        $this->updateCronTimestamp($untilDate, $lastImportedDate);
         $this->info('End ' . Carbon::now());
     }
 
@@ -167,7 +150,7 @@ class HCGenerateActivityStatsCommand extends Command
     /**
      * @param Collection $items
      */
-    private function detailedToYears(Collection $items)
+    private function detailedToYears(Collection $items): void
     {
         $items = $items->groupBy([
             function ($item) {
@@ -184,11 +167,17 @@ class HCGenerateActivityStatsCommand extends Command
     }
 
     /**
-     * @param Carbon $start
+     * @param Carbon $untilDate
+     * @param $lastImportedDate
      */
-    private function updateCronTimestamp(Carbon $start): void
+    private function updateCronTimestamp(Carbon $untilDate, $lastImportedDate): void
     {
-        $this->cronRepository->makeQuery()->updateOrCreate(['date' => $start]);
+        $date = ['date' => $untilDate];
+        if (isset($lastImportedDate)) {
+            $lastImportedDate->update($date);
+        } else {
+            $this->cronRepository->insert($date);
+        }
     }
 
     /**
@@ -256,5 +245,20 @@ class HCGenerateActivityStatsCommand extends Command
                 )
             );
         }
+    }
+
+    /**
+     * @param Builder|null $lastImportedDate
+     * @return Carbon
+     */
+    private function getLastImportedDay(?Builder $lastImportedDate): Carbon
+    {
+        if (isset($lastImportedDate)) {
+            $date = new Carbon($lastImportedDate->date);
+        } else {
+            $date = Carbon::minValue();
+        }
+
+        return $date;
     }
 }
