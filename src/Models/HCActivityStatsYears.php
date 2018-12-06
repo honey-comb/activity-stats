@@ -68,4 +68,9 @@ class HCActivityStatsYears extends HCUuidModel
     protected $with = [
 
     ];
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
 }

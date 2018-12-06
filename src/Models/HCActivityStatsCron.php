@@ -53,6 +53,9 @@ class HCActivityStatsCron extends HCModel
         "date",
     ];
 
+    /**
+     * @var string
+     */
     protected $primaryKey = 'count';
 
     /**

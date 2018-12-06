@@ -67,4 +67,9 @@ class HCActivityStatsDays extends HCUuidModel
     protected $with = [
 
     ];
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
 }

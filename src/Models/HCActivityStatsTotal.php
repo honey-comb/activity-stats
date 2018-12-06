@@ -57,7 +57,6 @@ class HCActivityStatsTotal extends HCUuidModel
         "type_id",
         "amountable_id",
         "amountable_type",
-        "date",
         "amount",
     ];
 
@@ -67,4 +66,9 @@ class HCActivityStatsTotal extends HCUuidModel
     protected $with = [
 
     ];
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
 }
