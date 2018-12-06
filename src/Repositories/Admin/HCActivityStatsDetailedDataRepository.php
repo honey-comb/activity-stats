@@ -38,6 +38,8 @@ class HCActivityStatsDetailedDataRepository extends HCBaseRepository
             ->whereHas('type', function ($query) {
                 $query->where('countable', true);
             })
+            ->where('date', '<=', $to)
+            ->where('date', '>', $from)
             ->setEagerLoads([])
             ->with([
                 'type' => function ($query) {
@@ -45,7 +47,6 @@ class HCActivityStatsDetailedDataRepository extends HCBaseRepository
                         ->select('id');
                 },
             ])
-            ->whereDate('date', '<=', $to)
-            ->whereDate('date', '>', $from)->get();
+            ->get();
     }
 }
