@@ -28,12 +28,12 @@
 namespace HoneyComb\ActivityStats\Console;
 
 use HoneyComb\ActivityStats\DTO\HCActivityStatsDTO;
+use HoneyComb\ActivityStats\Models\HCActivityStatsCron;
 use HoneyComb\ActivityStats\Repositories\Admin\HCActivityStatsCronRepository;
 use HoneyComb\ActivityStats\Repositories\Admin\HCActivityStatsDetailedDataRepository;
 use HoneyComb\ActivityStats\Repositories\Admin\HCActivityStatsRepository;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -100,9 +100,7 @@ class HCGenerateActivityStatsCommand extends Command
         $this->detailedToDays($items);
         $this->detailedToMonths($items);
         $this->detailedToYears($items);
-
-        //TODO add detailedTotal
-        //$this->detailedTotal($items);
+        $this->detailedToTotal($items);
 
         $this->updateCronTimestamp($untilDate, $lastImportedDate);
         $this->info('End ' . Carbon::now());
@@ -164,6 +162,26 @@ class HCGenerateActivityStatsCommand extends Command
             'amount',
         ], true)->toArray();
         $this->formatEntries(3, $items);
+    }
+
+    /**
+     * @param Collection $items
+     */
+    private function detailedToTotal(Collection $items): void
+    {
+        $items = $items->groupBy([
+            function ($item) {
+                return $item->type->id;
+            },
+            'amountable_type',
+            'amountable_id',
+            function () {
+                return Carbon::minValue()->toDateString();
+            },
+            'amount',
+        ], true)->toArray();
+
+        $this->formatEntries(4, $items);
     }
 
     /**
@@ -233,12 +251,16 @@ class HCGenerateActivityStatsCommand extends Command
     private function insertEntries(int $dateType, array $entries): void
     {
         foreach ($entries as $entry) {
-
+            if (isset($entry['date'])) {
+                $date = new Carbon($entry['date']);
+            } else {
+                $date = Carbon::now();
+            }
             $this->datesRepository->updateAmount(
                 new $entry['amountable_type'],
                 new HCActivityStatsDTO(
                     $dateType,
-                    new Carbon($entry['date']),
+                    $date,
                     $entry['amount'],
                     $entry['type'],
                     $entry['amountable_id']
@@ -248,10 +270,10 @@ class HCGenerateActivityStatsCommand extends Command
     }
 
     /**
-     * @param Builder|null $lastImportedDate
+     * @param HCActivityStatsCron|null $lastImportedDate
      * @return Carbon
      */
-    private function getLastImportedDay(?Builder $lastImportedDate): Carbon
+    private function getLastImportedDay(?HCActivityStatsCron $lastImportedDate): Carbon
     {
         if (isset($lastImportedDate)) {
             $date = new Carbon($lastImportedDate->date);

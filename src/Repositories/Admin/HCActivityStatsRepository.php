@@ -77,6 +77,11 @@ class HCActivityStatsRepository extends HCBaseRepository
 
                 $query = $model->amountYears();
                 break;
+
+            case HCActivityStatsDTO::TOTAL :
+
+                $query = $model->amountTotal();
+                break;
         }
 
         return $query;

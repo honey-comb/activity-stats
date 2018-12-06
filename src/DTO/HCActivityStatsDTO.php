@@ -28,6 +28,11 @@ class HCActivityStatsDTO
     const YEARS = 3;
 
     /**
+     * @var int
+     */
+    const TOTAL = 4;
+
+    /**
      * @var \Carbon\Carbon
      */
     private $date;
@@ -83,6 +88,12 @@ class HCActivityStatsDTO
 
                 $this->date = $date->year;
                 break;
+
+            case self::TOTAL:
+
+                $this->date = $date->toDateString();
+                break;
+
         }
     }
 
@@ -92,12 +103,17 @@ class HCActivityStatsDTO
      */
     public function getUnique(string $auditableType): array
     {
-        return [
+        $data = [
             'type_id' => $this->type,
-            'date' => $this->date,
             'amountable_id' => $this->amountableId,
             'amountable_type' => $auditableType,
         ];
+
+        if ($this->dateType != self::TOTAL) {
+            $data['date'] = $this->date;
+        }
+
+        return $data;
     }
 
     /**
